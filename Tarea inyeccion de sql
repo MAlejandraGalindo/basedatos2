@@ -1,0 +1,14 @@
+Inyección SQL es un método de infiltración de código intruso que se vale de una vulnerabilidad informática presente en una aplicación en el nivel de validación de las entradas para realizar operaciones sobre una base de datos.
+El origen de la vulnerabilidad radica en el incorrecto chequeo o filtrado de las variables utilizadas en un programa que contiene, o bien genera, código SQL. Es, de hecho, un error de una clase más general de vulnerabilidades que puede ocurrir en cualquier lenguaje de programación o script que esté embebido dentro de otro.
+Se conoce como Inyección SQL, indistintamente, al tipo de vulnerabilidad, al método de infiltración, al hecho de incrustar código SQL intruso y a la porción de código incrustado.
+Ejemplo: El código SQL original y vulnerable es:
+Consulta:= "SELECT * FROM usuarios WHERE nombre = '" + nombreUsuario + "';"
+Si el operador escribe un nombre, por ejemplo "Alicia", nada anormal sucederá, la aplicación generaría una sentencia SQL similar a la siguiente, que es perfectamente correcta, en donde se seleccionarían todos los registros con el nombre "Alicia" en la base de datos:
+SELECT * FROM usuarios WHERE nombre = 'Alicia';
+Pero si un operador malintencionado escribe como nombre de usuario a consultar: "Alicia'; DROP TABLE usuarios; SELECT * FROM datos WHERE nombre LIKE '%" (sin las comillas externas), se generaría la siguiente consulta SQL, (el color verde es lo que pretende el programador, el azul es el dato, y el rojo, el código SQL inyectado):
+
+SELECT * FROM usuarios WHERE nombre = 'Alicia';
+DROP TABLE usuarios;
+SELECT * FROM datos WHERE nombre LIKE '%';
+
+En la base de datos se ejecutaría la consulta en el orden dado, se seleccionarían todos los registros con el nombre 'Alicia', se borraría la tabla 'usuarios' y finalmente se seleccionaría toda la tabla "datos", que no debería estar disponible para los usuarios web comunes. En resumen, cualquier dato de la base de datos puede quedar disponible para ser leído o modificado por un usuario malintencionado.
