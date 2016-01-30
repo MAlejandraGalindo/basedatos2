@@ -52,3 +52,25 @@ START WITH 1
 INCREMENT BY 1
 NOMAXVALUE;
 
+set serveroutput on;
+create or replace procedure hola_mundo( nombre IN VARCHAR2)
+AS
+BEGIN
+--AQUI VA LA LOGICA
+DBMS_OUTPUT.PUT_LINE('HOLA COMO ESTAS' || NOMBRE);
+END;
+/
+
+BEGIN
+hola_mundo(' ALEJANDRA  ');
+END;
+/
+declare
+valor number;
+begin
+suma(12,8,valor);
+dbms_output.put_line('la suma es'||valor);
+end;
+/
+
+
