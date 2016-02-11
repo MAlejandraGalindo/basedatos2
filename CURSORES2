@@ -1,0 +1,48 @@
+CREATE TABLE PAISES(id_pais varchar2(4),
+                   nombre varchar2(100),
+                   habitantes integer,
+                   idioma varchar2(40),
+  constraint pk_id_pais primary key(id_pais));
+
+insert into paises values('mx','Mexico',90000000,'español');
+insert into paises values('usa','estados unidos',120000000,'ingles');
+insert into paises values('jpa','Japon',800000000,'japones');
+insert into paises values('ger','Alemania',140000000,'aleman');
+insert into paises values('bra','Brasil',230000000,'portugues');
+
+select * from paises;
+
+
+DECLARE 
+CURSOR CUR_PAISES IS SELECT * FROM PAISES;
+TOTAL_HABITANTES INTEGER;
+BEGIN
+TOTAL_HABITANTES:=0;
+FOR FILA IN CUR_PAISES LOOP
+TOTAL_HABITANTES:=TOTAL_HABITANTES+FILA.HABITANTES;
+DBMS_OUTPUT.PUT_LINE('NOMBRE:  '||FILA.NOMBRE||'HABITANTES:'  ||FILA.HABITANTES);
+
+
+END LOOP;
+DBMS_OUTPUT.PUT_LINE('HABITANTES DE TODOS LOS PAISES:'||TOTAL_HABITANTES);
+END;
+
+
+CREATE TABLE ESTUDIANTE(id_estudiante integer,
+                         carrera varchar2(30),
+                         edad integer,id_pais varchar2(4),
+                    constraint pk_id_estudiante  primary key(id_estudiante),
+                   CONSTRAINT FK_ID_PAIS FOREIGN KEY(ID_PAIS) references PAISES(id_pais));
+
+
+insert into estudiante values(12468912,'mexico','ing sistemas',22,'mx');
+insert into estudiante values(12474545,'mexico','arquitectura',21,'mx';
+insert into estudiante values(45864456,'mexico','ing mecanica',22,'mx';
+insert into estudiante values(58797597,'estados unidos','derecho',25,'usa');
+insert into estudiante values(67897847,'japon','ing sistemas',22,'jpa');
+insert into estudiante values(45456448,'alemania','ing mecatronica',21,'ger');
+insert into estudiante values(58476467,'brasil','robotica',23,'bra');
+
+
+DECLARE
+CURSOR CUR_ESTUDIANTE IS SELECT * FROM ESTUDIANTE;
