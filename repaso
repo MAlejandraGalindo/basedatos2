@@ -1,0 +1,44 @@
+CREATE TABLE libros
+  (
+    libro_id           INTEGER,
+    isbn              VARCHAR2(13),
+    titulo            VARCHAR2(200),
+    resumen           VARCHAR2(2000),
+    autor             VARCHAR2(200),
+    fecha_publicacion DATE,
+    num_pag           NUMBER,
+    CONSTRAINT pk_libro_id PRIMARY KEY (libro_id)
+  );
+
+SET serveroutput ON;
+/
+
+
+create sequence sec_libro --se crea la secuencia de 1 en 1
+start with 1
+increment by 1
+nomaxvalue;
+SET serveroutput ON;
+/
+
+CREATE OR REPLACE PROCEDURE guardarlibros(valor_id  OUT INTEGER,
+isbn IN VARCHAR2, titulo IN VARCHAR2, resumen IN VARCHAR2, autor IN VARCHAR2, dia IN INTEGER, mes IN VARCHAR2, anio IN INTEGER ,num_pag NUMBER,my_date)--  in
+AS
+  my_fecha date;
+BEGIN
+  my_fecha:=to_date(''||dia||'-'||mes||'-'||anio) ;
+SELECT sec_libros.NEXTVAL INTO valor_id FROM DUAL;
+INSERT INTO libros VALUES(my_libro_id,my_isbn,my_titulo,my_resumen,my_autor,my_fecha_publicacion,my_num_pag);
+END;
+/
+
+SELECT * FROM libros;
+/
+  guardarlibros(valor_id, '1234','Abrupt climate change', 'Trata de que todos vamos a morir por contaminadores',
+  'John Wallace',27,'jan',2010,455);
+  begin
+  for I in 1..2000 loop
+  insert into libros values(I);
+  end loop;
+ END;
+/
