@@ -92,7 +92,7 @@ UPDATE PRODUCTO SET PRECIO=MY_PRECIO WHERE ID_PRODUCTO=MY_ID_PRODUCTO;
 end actualizar_producto;
 
 /
-
+--generamos el disparador que nos limita el precio a que sea siempre mayor que el viejo
 CREATE OR REPLACE TRIGGER ACTUALIZAR_PRECIO BEFORE UPDATE ON PRODUCTO FOR EACH ROW
 BEGIN
 
@@ -101,6 +101,9 @@ RAISE_APPLICATION_ERROR(-20001,'LO SIENTO EL PRECIO DEBE SER MAYOR QUE EL ANTERI
 END IF;
 END;
 /
-UPDATE PRODUCTO SET PRECIO=50 WHERE ID_PRODUCTO=1;
+--probaremos si funciona
+begin
+actualizar_producto(1,51);
+end;
+/
 SELECT * FROM PRODUCTO;
-
